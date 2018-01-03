@@ -30,6 +30,7 @@ url="http://rate.bot.com.tw/xrt?Lang=zh-TW"
 ini="This bot have some functions\n\n if you want a song type /song \n\n if you want binary to decimal type  /bconv\n\n if you want play number game type /game \n\n if you want to find resistance table type /res\n\n if you want to exchang NTD to other currency type /exc "
 cur=""
 NTD=[]
+port=0
 choose=0
 def geuss(g):
     global num
@@ -60,8 +61,10 @@ def worm():
         NTD.append(data1[a][2])
 def  _set_webhook ():
     p=subprocess.Popen(r'ngrok.exe http -bind-tls=true 5000')
+    global port
     time.sleep(3) # to allow the ngrok to fetch the url from the server
-    localhost_url = "http://localhost:4040/api/tunnels" #Url with tunnel details
+    port=input()
+    localhost_url = "http://localhost:"+str(port)+"/api/tunnels" #Url with tunnel details
     tunnel_url = requests.get(localhost_url).text #Get the tunnel information
     j = json.loads(tunnel_url)
     print(j['tunnels'][0]['public_url'])
@@ -307,7 +310,7 @@ def  webhook_handler ():
      
     return  'ok'
 
-if  __name__  ==  "__main__" : 
+if  __name__  ==  "__main__" :
     _set_webhook ()
     getlastmesg()
     worm()
