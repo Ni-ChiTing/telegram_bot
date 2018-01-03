@@ -9,6 +9,9 @@ import  telegram
 from  flask  import  Flask ,  request
 import requests
 from bs4 import BeautifulSoup
+import subprocess
+import json
+import time
 app  =  Flask ( __name__ ) 
 bot  =  telegram . Bot (token='529449700:AAG6dcqs0NaI2Od1pefXfpJEFG1eoEbBzqM' )
 text=None
@@ -55,8 +58,14 @@ def worm():
         cur=cur+country[a]+"\n"
         data.append(data1[a][3])
         NTD.append(data1[a][2])
-def  _set_webhook (): 
-    status  =  bot . set_webhook ( 'https://71868da8.ngrok.io/hook' ) 
+def  _set_webhook ():
+    p=subprocess.Popen(r'ngrok.exe http -bind-tls=true 5000')
+    time.sleep(3) # to allow the ngrok to fetch the url from the server
+    localhost_url = "http://localhost:4040/api/tunnels" #Url with tunnel details
+    tunnel_url = requests.get(localhost_url).text #Get the tunnel information
+    j = json.loads(tunnel_url)
+    print(j['tunnels'][0]['public_url'])
+    status  =  bot . set_webhook ( j['tunnels'][0]['public_url']+'/hook' ) 
     if  not  status : 
         print ( 'Webhook setup failed' ) 
         sys . exit ( 1 )
