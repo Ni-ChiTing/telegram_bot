@@ -43,4 +43,4 @@ State有19個
     - function to build bot
 
 ## fsm diagram
-![](https://i.imgur.com/lXrZWYJ.png)
+![](my_state_diagram.png)
