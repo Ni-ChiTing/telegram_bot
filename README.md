@@ -1,5 +1,4 @@
 # Simple Telegram Bot　
-> [name=倪祺婷]
 ```
 檔案主要兩個，一個是bot.py 另一個是，Call_bind.py
 State有19個
